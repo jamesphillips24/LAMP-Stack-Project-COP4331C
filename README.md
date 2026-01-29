@@ -25,7 +25,3 @@ Try to stick these just for uniformity's sake, mainly
 - The document could be this README.md or another .md/.txt file we keep in the root
 - If this is too much, we can always just make sure to add ample comments in any code just to explain things
 - For the database, a quick document explaining the structure for quick reference may be good. Anyone with access or availability could complete this, since we should all be able to get to the structure via terminal/ssh
-## Timeline Info
-### Frontend
-- Aiden - UI Design - 1/28 thru ...
-- Aiden - Development - 1/28 thru ...
