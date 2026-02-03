@@ -1,3 +1,4 @@
+// TODO(API): Update base URL to the deployed API origin for the environment.
 const urlBase = 'http://contactmanager4331.xyz';
 const extension = 'php';
 
@@ -13,12 +14,14 @@ function doLogin()
 
 	let login = document.getElementById("username").value;
 	let password = document.getElementById("password").value;
+	// TODO(API): Remove debug logging before production.
 	console.log(login);
 	console.log(password);
 
 	let tmp = {login:login,password:password};
 	let jsonPayload = JSON.stringify( tmp );
 
+	// TODO(API): Keep endpoint path in sync with backend routing.
 	let url = urlBase + '/LAMPAPI/Login.' + extension;
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
@@ -32,6 +35,7 @@ function doLogin()
 				let jsonObject = JSON.parse( xhr.responseText );
 				userId = jsonObject.id;
 
+				// TODO(API): Display login errors from the API instead of silent return.
 				if( userId < 1 )
 				{
 					return;
@@ -40,6 +44,7 @@ function doLogin()
 				firstName = jsonObject.firstName;
 				lastName = jsonObject.lastName;
 
+				// TODO(API): Consider replacing cookie auth with a session/JWT flow from the backend.
 				saveCookie();
 
 				window.location.href = "contacts.html";

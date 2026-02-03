@@ -64,7 +64,7 @@
     popupForm.addEventListener('submit', (e) => {
       e.preventDefault();
       if (activePopup === 'signup') {
-        // Placeholder: handle signup submission here.
+        // TODO(API): Wire signup submission to backend and handle errors.
       }
       closePopup();
     });

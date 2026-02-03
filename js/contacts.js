@@ -33,6 +33,7 @@
   let editing = false;
   let activePopup = null;
 
+  // TODO(API): Replace local list with API-backed contacts data.
   const allData = [];
 
   function getContactById(id) {
@@ -155,6 +156,7 @@
     if (current) current.setAttribute('aria-selected', 'true');
   }
 
+  // TODO(API): Replace mock fetch with a real API call.
   function fetchMock({ page = 1, limit = PAGE_SIZE, search = '' } = {}) {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -346,6 +348,7 @@
           return;
         }
 
+        // TODO(API): Send create-contact request to backend and use returned ID.
         const newContact = {
           id: getNextId(),
           name: nameValue,
@@ -354,6 +357,7 @@
           avatarUrl: null
         };
 
+        // TODO(API): Replace local insert with a refetch from the backend.
         allData.unshift(newContact);
         selectedId = newContact.id;
         query = '';
