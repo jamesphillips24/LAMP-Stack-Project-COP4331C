@@ -1,26 +1,27 @@
 <html>
-  <head>
-    <link rel="stylesheet" href="css/loginStyles.css">
-    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto Slab'>
-    <title>Contact Manager</title>
-  </head>
-  <body>
-    <div class="login-container">
-      <div class="login-bg-rect">
-        <div class="login-header-text">Contact Manager</div>
-        <div class="login-horizontal-line"></div>
-        <div class="login-label">Username:</div>
-        <div class="login-field-container">
-          <input type="text" id="username" name="username">
-        </div>
-        <div class="login-label">Password:</div>
-        <div class="login-field-container">
-          <input type="text" id="password" name="password">
-        </div>
-        <div class="login-horizontal-line has-margins"></div>
-        <!--This is a temporary redirect until we get js for the database log in-->
-        <a href="contacts.html" class="login-button">Log In</a>
+<head>
+  <link rel="stylesheet" href="css/loginStyles.css">
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto Slab'>
+  <title>Contact Manager</title>
+  <script type="text/javascript" src="js/code.js"></script>
+</head>
+
+<body>
+  <div class="login-container">
+    <div class="login-bg-rect">
+      <div class="login-header-text">Contact Manager</div>
+      <div class="login-horizontal-line"></div>
+      <div class="login-label">Username:</div>
+      <div class="login-field-container">
+        <input type="text" id="username" name="username">
       </div>
+      <div class="login-label">Password:</div>
+      <div class="login-field-container">
+        <input type="text" id="password" name="password">
+      </div>
+      <div class="login-horizontal-line has-margins"></div>
+      <button type="button" id="loginButton" class="login-button" onclick="doLogin();">Log In</a>
     </div>
-  </body>
+  </div>
+</body>
 </html>
