@@ -1,12 +1,99 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/contactsStyles.css">
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto Slab'>
     <title>Contacts | Contact Manager</title>
   </head>
   <body>
     <div class="cts-container">
+      
+      <div class="cts-left-panel">
+        <div class="cts-left-panel-top-container">
+          <img src="" alt="Contact Manager Logo" class="cts-logo">
+        </div>
         
+        <div class="cts-left-panel-center-container">
+          <div class="cts-horizontal-line"></div>
+          <a href="contacts.html" class="cts-button dark-outline">
+            <img src="images/contacts.png" alt="Phone icon for the Contacts page" class="cts-button-icon">
+            <span class="cts-button-text">Contacts</span>
+          </a>
+          <div class="cts-horizontal-line"></div>
+          <a href="aboutUs.html" class="cts-button dark-outline">
+            <img src="images/aboutUs.png" alt="Question mark icon for the About Us page" class="cts-button-icon">
+            <span class="cts-button-text">About Us</span>
+          </a>
+          <div class="cts-horizontal-line"></div>
+        </div>
+          
+        <div class="cts-left-panel-bottom-container">
+          <a href="index.html" class="cts-button dark-outline">
+            <img src="images/logout.png" alt="Open bracket with arrow pointing out for the log out button" class="cts-button-icon">
+            <span class="cts-button-text">Log Out</span>
+          </a>
+        </div>
+      </div>
+      
+      <div class="cts-center-container">
+        <div class="cts-center-content-container">
+          <div class="cts-contacts-outer-container">
+            <div class="cts-search-field-container">
+              <input type="text" placeholder="Search contacts..." id="cts-search" name="cts-search" class="cts-search-input-field">
+              <a class="cts-search-button">
+                <img src="images/searchGlass.png" alt="Magnifying glass for the search button" class="cts-search-button-icon">
+              </a>
+            </div>
+            
+            <div class="cts-search-horizontal-line"></div>
+            
+            <div class="cts-list-container">
+              <div id="cts-contacts-list" class="cts-contacts-list" role="list" aria-label="Contacts list"></div>
+              
+              <template id="contact-item-template">
+                <div class="cts-contact-item" role="listitem" data-id="">
+                  <div class="cts-small-contact-avatar" aria-hidden="true"></div>
+                  <div class="cts-contact-meta">
+                    <div class="cts-contact-name"></div>
+                    <div class="cts-contact-phone"></div>
+                  </div>
+                </div>
+              </template>
+            </div>
+            
+            <div class="cts-modify-buttons-container">
+              <a class="cts-button">
+                <img src="images/add.png" alt="Plus symbol for the add new button" class="cts-button-icon">
+                <span class="cts-button-text">Add New</span>
+              </a>
+              
+              <a class="cts-button">
+                <img src="images/delete.png" alt="Trash can for the delete button" class="cts-button-icon">
+                <span class="cts-button-text">Delete</span>
+              </a>
+              
+              <a class="cts-button">
+                <img src="images/edit.png" alt="Pencil in a box for the edit button" class="cts-button-icon">
+                <span class="cts-button-text">Edit</span>
+              </a>
+            </div>
+          </div>
+          
+          <div class="cts-center-vertical-line"></div>
+          
+          <div class="cts-center-contact-info-container">
+            <div class="cts-info-title-container">
+              <div class="cts-large-contact-avatar"></div>
+              <div class="cts-info-title-text">John Doe wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</div>
+            </div>
+            
+            <div class="cts-info-horizontal-line"></div>
+          </div>
+        </div>
+      </div>
+      
     </div>
+    <script src="js/contacts.mock.js"></script>
   </body>
 </html>
