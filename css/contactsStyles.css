@@ -9,6 +9,23 @@ body {
     font-weight: 100;
 }
 
+body.cm-popup-open {
+    overflow: hidden;
+}
+
+/* Visually hidden label for accessibility */
+.cts-visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
 /* Container that centers horizontally and vertically, full viewport height */
 .cts-container {
     display: flex;
@@ -85,6 +102,7 @@ body {
     
     width: 100px;
     height: 100px;
+    padding: 0;
     margin-left: auto;
     margin-right: auto;
     
@@ -96,6 +114,7 @@ body {
     text-align: center;
     text-decoration: none;
     font-size: 16px;
+    font-family: 'Roboto Slab';
     
     cursor: pointer;
     transition-duration: 0.4s;
@@ -110,6 +129,11 @@ body {
 .cts-button:active {
     background-color: #ffdfc6;
     transition-duration: 0s;
+}
+
+.cts-button:focus-visible {
+    outline: 3px solid #d1801e;
+    outline-offset: 2px;
 }
 
 .cts-button.dark-outline {
@@ -216,7 +240,7 @@ body {
     
     font-family: 'Roboto Slab';
     font-size: 16px;
-    color: #374f4e;
+    color: #000000;
 }
 
 /* Modifies the text field when the user hovers over */
@@ -228,12 +252,16 @@ body {
 .cts-search-button {
     width: 50px;
     height: 50px;
+    padding: 0;
     
     box-sizing: border-box;
     
     border: 0;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
+    
+    background-color: transparent;
+    cursor: pointer;
 }
 
 /* Modifites the search button on hover */
@@ -244,6 +272,11 @@ body {
 /* Modifites the search button on click */
 .cts-search-button:active {
     background-color: #00000064;
+}
+
+.cts-search-button:focus-visible {
+    outline: 3px solid #d1801e;
+    outline-offset: 2px;
 }
 
 /* The icon in the search button */
@@ -335,6 +368,11 @@ body {
 /* Adds an outline when item is selected */
 .cts-contact-item[aria-selected="true"] {
     outline: 3px solid #d1801e;
+}
+
+.cts-contact-item:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 2px;
 }
 
 /* Controls the small avatar */
@@ -444,6 +482,7 @@ body {
     
     color: #000000;
     font-weight: 600;
+    font-size: 24px;
 }
 
 /* Text for the name in the info panel */
@@ -468,4 +507,225 @@ body {
     border-radius: 5px;
     
     background-color: #daccc4;
+}
+
+/* Wrapper for the editable info panel content */
+.cts-info-body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
+    width: 900px;
+    padding-top: 20px;
+}
+
+/* Grid for two-column fields */
+.cts-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+/* Individual field wrapper */
+.cts-info-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Label styling for info fields */
+.cts-info-label {
+    font-size: 18px;
+    color: #000000;
+    letter-spacing: 0.5px;
+}
+
+/* Input styling for info fields */
+.cts-info-input {
+    height: 52px;
+    padding: 0 12px;
+    
+    border: 2px solid #daccc4;
+    border-radius: 10px;
+    
+    background-color: #daccc4;
+    
+    font-family: 'Roboto Slab';
+    font-size: 20px;
+    color: #000000;
+}
+
+.cts-info-input:focus {
+    outline: 3px solid #d1801e;
+    border-color: #d1801e;
+}
+
+.cts-info-input:disabled {
+    background-color: #bca79a;
+    color: #000000;
+    cursor: not-allowed;
+}
+
+/* Status text under the fields */
+.cts-info-status {
+    font-size: 16px;
+    color: #000000;
+    opacity: 0.9;
+}
+
+.cts-center-contact-info-container.is-editing .cts-info-input {
+    background-color: #ffffff;
+}
+
+/* Disabled state for action buttons */
+.cts-button.is-disabled {
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+/* Popup overlay shared styling */
+.cm-popup-overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    
+    background-color: #00000080;
+    z-index: 200;
+}
+
+.cm-popup-overlay.is-open {
+    display: flex;
+}
+
+/* Popup container */
+.cm-popup {
+    width: 620px;
+    max-width: calc(100% - 40px);
+    
+    border: 3px solid #aa8552;
+    border-radius: 16px;
+    
+    background-color: #daccc4;
+    color: #2e3c3b;
+    
+    box-shadow: 0 24px 60px #00000040;
+}
+
+.cm-popup-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    padding: 20px 24px 10px;
+    
+    border-bottom: 2px solid #aa8552;
+}
+
+.cm-popup-title {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.cm-popup-close {
+    width: 36px;
+    height: 36px;
+    
+    border: 2px solid #aa8552;
+    border-radius: 50%;
+    
+    background-color: #edbd95;
+    color: #2e3c3b;
+    font-size: 22px;
+    line-height: 1;
+    
+    cursor: pointer;
+}
+
+.cm-popup-body {
+    padding: 18px 24px 24px;
+}
+
+.cm-popup-description {
+    margin: 0 0 18px;
+    color: #4b5b5a;
+}
+
+.cm-popup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cm-popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.cm-popup-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.cm-popup-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.cm-popup-label {
+    font-size: 16px;
+    color: #2e3c3b;
+}
+
+.cm-popup-input {
+    height: 48px;
+    padding: 0 12px;
+    
+    border: 2px solid #aa8552;
+    border-radius: 10px;
+    
+    background-color: #ffffff;
+    
+    font-family: 'Roboto Slab';
+    font-size: 18px;
+    color: #374f4e;
+}
+
+.cm-popup-input:focus {
+    outline: 3px solid #d1801e;
+    border-color: #d1801e;
+}
+
+.cm-popup-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.cm-popup-button {
+    min-width: 120px;
+    height: 44px;
+    
+    border: 2px solid #aa8552;
+    border-radius: 10px;
+    
+    background-color: #edbd95;
+    color: #2e3c3b;
+    font-family: 'Roboto Slab';
+    font-size: 16px;
+    
+    cursor: pointer;
+}
+
+.cm-popup-button.primary {
+    background-color: #d1801e;
+    color: #ffffff;
+}
+
+.cm-popup-button.ghost {
+    background-color: transparent;
 }

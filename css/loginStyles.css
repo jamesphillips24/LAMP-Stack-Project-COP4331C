@@ -9,6 +9,10 @@ body {
     font-weight: 100;
 }
 
+body.cm-popup-open {
+    overflow: hidden;
+}
+
 /* Container that centers horizontally and vertically, full viewport height */
 .login-container {
     display: flex;
@@ -59,7 +63,7 @@ body {
 
 /* Adds padding to the horizontal line */
 .login-horizontal-line.has-margins {
-    margin-top: 40px;
+    margin-top: 20px;
     margin-bottom: 25px;
 }
 
@@ -71,7 +75,7 @@ body {
     color: #ffffff;
     
     margin-left: 50px;
-    padding-top: 50px;
+    padding-top: 40px;
     padding-bottom: 10px;
 }
 
@@ -90,6 +94,15 @@ body {
     margin-left: auto;
     margin-right: auto;
     margin-top: 10px;
+}
+
+/* Error text reserved space */
+.login-error-text {
+    min-height: 24px;
+    margin-top: 16px;
+    font-size: 18px;
+    color: #ffdfc6;
+    text-align: center;
 }
 
 /* Controls the text fields */
@@ -116,6 +129,19 @@ body {
     background-color: #ffffff32;
 }
 
+/* Container for the login action buttons */
+.login-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.login-actions .login-button {
+    margin-left: 0;
+    margin-right: 0;
+}
+
 /* Controls the log in button */
 .login-button {
     display: flex;
@@ -123,7 +149,7 @@ body {
     justify-content: center;
     
     width: 400px;
-    height: 100px;
+    height: 75px;
     margin-left: auto;
     margin-right: auto;
     
@@ -140,13 +166,182 @@ body {
     transition-duration: 0.4s;
 }
 
+/* Secondary action styling */
 /* Hover state of the log in button */
 .login-button:hover {
     background-color: #af8c70;
 }
 
+
 /* Active state of the log in button (clicked) */
 .login-button:active {
     background-color: #ffdfc6;
     transition-duration: 0s;
+}
+
+/* Signup text link */
+.login-signup-text {
+    font-size: 18px;
+    color: #ffffff;
+}
+
+.login-signup-link {
+    color: #edbd95;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-signup-link:hover {
+    text-decoration: underline;
+}
+
+.login-signup-link:active {
+    color: #ffdfc6;
+}
+
+/* Popup overlay shared styling */
+.cm-popup-overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    
+    background-color: #00000080;
+    z-index: 200;
+}
+
+.cm-popup-overlay.is-open {
+    display: flex;
+}
+
+/* Popup container */
+.cm-popup {
+    width: 620px;
+    max-width: calc(100% - 40px);
+    
+    border: 3px solid #aa8552;
+    border-radius: 16px;
+    
+    background-color: #daccc4;
+    color: #2e3c3b;
+    
+    box-shadow: 0 24px 60px #00000040;
+}
+
+.cm-popup-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    padding: 20px 24px 10px;
+    
+    border-bottom: 2px solid #aa8552;
+}
+
+.cm-popup-title {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.cm-popup-close {
+    width: 36px;
+    height: 36px;
+    
+    border: 2px solid #aa8552;
+    border-radius: 50%;
+    
+    background-color: #edbd95;
+    color: #2e3c3b;
+    font-size: 22px;
+    line-height: 1;
+    
+    cursor: pointer;
+}
+
+.cm-popup-body {
+    padding: 18px 24px 24px;
+}
+
+.cm-popup-description {
+    margin: 0 0 18px;
+    color: #4b5b5a;
+}
+
+.cm-popup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cm-popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.cm-popup-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.cm-popup-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.cm-popup-label {
+    font-size: 16px;
+    color: #2e3c3b;
+}
+
+.cm-popup-input {
+    height: 48px;
+    padding: 0 12px;
+    
+    border: 2px solid #aa8552;
+    border-radius: 10px;
+    
+    background-color: #ffffff;
+    
+    font-family: 'Roboto Slab';
+    font-size: 18px;
+    color: #374f4e;
+}
+
+.cm-popup-input:focus {
+    outline: 3px solid #d1801e;
+    border-color: #d1801e;
+}
+
+.cm-popup-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.cm-popup-button {
+    min-width: 120px;
+    height: 44px;
+    
+    border: 2px solid #aa8552;
+    border-radius: 10px;
+    
+    background-color: #edbd95;
+    color: #2e3c3b;
+    font-family: 'Roboto Slab';
+    font-size: 16px;
+    
+    cursor: pointer;
+}
+
+.cm-popup-button.primary {
+    background-color: #d1801e;
+    color: #ffffff;
+}
+
+.cm-popup-button.ghost {
+    background-color: transparent;
 }
