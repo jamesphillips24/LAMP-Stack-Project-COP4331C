@@ -1,12 +1,157 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/contactsStyles.css">
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto Slab'>
     <title>Contacts | Contact Manager</title>
   </head>
   <body>
     <div class="cts-container">
+      
+      <div class="cts-left-panel">
+        <div class="cts-left-panel-top-container">
+          <img src="" alt="Contact Manager Logo" class="cts-logo">
+        </div>
         
+        <div class="cts-left-panel-center-container">
+          <div class="cts-horizontal-line"></div>
+          <a href="contacts.html" class="cts-button dark-outline">
+            <img src="images/contacts.png" alt="Phone icon for the Contacts page" class="cts-button-icon">
+            <span class="cts-button-text">Contacts</span>
+          </a>
+          <div class="cts-horizontal-line"></div>
+          <a href="aboutUs.html" class="cts-button dark-outline">
+            <img src="images/aboutUs.png" alt="Question mark icon for the About Us page" class="cts-button-icon">
+            <span class="cts-button-text">About Us</span>
+          </a>
+          <div class="cts-horizontal-line"></div>
+        </div>
+          
+        <div class="cts-left-panel-bottom-container">
+          <a href="index.html" class="cts-button dark-outline">
+            <img src="images/logout.png" alt="Open bracket with arrow pointing out for the log out button" class="cts-button-icon">
+            <span class="cts-button-text">Log Out</span>
+          </a>
+        </div>
+      </div>
+      
+      <div class="cts-center-container">
+        <div class="cts-center-content-container">
+          <div class="cts-contacts-outer-container">
+            <div class="cts-search-field-container">
+              <label class="cts-visually-hidden" for="cts-search">Search contacts</label>
+              <input type="text" placeholder="Search contacts..." id="cts-search" name="cts-search" class="cts-search-input-field">
+              <button class="cts-search-button" type="button" aria-label="Search contacts">
+                <img src="images/searchGlass.png" alt="Magnifying glass for the search button" class="cts-search-button-icon">
+              </button>
+            </div>
+            
+            <div class="cts-search-horizontal-line"></div>
+            
+            <div class="cts-list-container" tabindex="0" aria-label="Contacts list">
+              <div id="cts-contacts-list" class="cts-contacts-list" role="list"></div>
+              
+              <template id="contact-item-template">
+                <div class="cts-contact-item" role="listitem" tabindex="0" data-id="">
+                  <div class="cts-small-contact-avatar" aria-hidden="true"></div>
+                  <div class="cts-contact-meta">
+                    <div class="cts-contact-name"></div>
+                    <div class="cts-contact-phone"></div>
+                  </div>
+                </div>
+              </template>
+            </div>
+            
+            <div class="cts-modify-buttons-container">
+              <button class="cts-button" type="button" id="cts-add-button" aria-haspopup="dialog" aria-controls="cm-popup-overlay">
+                <img src="images/add.png" alt="Plus symbol for the add new button" class="cts-button-icon">
+                <span class="cts-button-text">Add New</span>
+              </button>
+              
+              <button class="cts-button" type="button" id="cts-delete-button">
+                <img src="images/delete.png" alt="Trash can for the delete button" class="cts-button-icon">
+                <span class="cts-button-text">Delete</span>
+              </button>
+              
+              <button class="cts-button" type="button" id="cts-edit-button">
+                <img src="images/edit.png" alt="Pencil in a box for the edit button" class="cts-button-icon">
+                <span class="cts-button-text" id="cts-edit-button-text">Edit</span>
+              </button>
+            </div>
+          </div>
+          
+          <div class="cts-center-vertical-line"></div>
+          
+          <div class="cts-center-contact-info-container">
+            <div class="cts-info-title-container">
+              <div class="cts-large-contact-avatar" id="cts-info-avatar"></div>
+              <div class="cts-info-title-text" id="cts-info-title">Select a contact</div>
+            </div>
+            
+            <div class="cts-info-horizontal-line"></div>
+
+            <div class="cts-info-body">
+              <div class="cts-info-field">
+                <label class="cts-info-label" for="cts-info-name">Name</label>
+                <input class="cts-info-input" type="text" id="cts-info-name" placeholder="Contact name" disabled>
+              </div>
+
+              <div class="cts-info-grid">
+                <div class="cts-info-field">
+                  <label class="cts-info-label" for="cts-info-phone">Phone</label>
+                  <input class="cts-info-input" type="tel" id="cts-info-phone" placeholder="(555) 555-5555" disabled>
+                </div>
+                
+                <div class="cts-info-field">
+                  <label class="cts-info-label" for="cts-info-email">Email</label>
+                  <input class="cts-info-input" type="email" id="cts-info-email" placeholder="email@example.com" disabled>
+                </div>
+              </div>
+
+              <div class="cts-info-status" id="cts-info-status">Select a contact to view details.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
     </div>
+
+    <div class="cm-popup-overlay" id="cm-popup-overlay" aria-hidden="true">
+      <div class="cm-popup" role="dialog" aria-modal="true" aria-labelledby="cm-popup-title" aria-describedby="cm-popup-description">
+        <div class="cm-popup-header">
+          <div class="cm-popup-title" id="cm-popup-title">Add Contact</div>
+          <button class="cm-popup-close" type="button" id="cm-popup-close" aria-label="Close dialog">X</button>
+        </div>
+        <div class="cm-popup-body">
+          <p class="cm-popup-description" id="cm-popup-description">Add a new contact here!</p>
+          <form class="cm-popup-form" id="cm-popup-form">
+            <div class="cm-popup-content" id="cm-popup-content"></div>
+            <div class="cm-popup-actions">
+              <button class="cm-popup-button ghost" type="button" id="cm-popup-cancel">Cancel</button>
+              <button class="cm-popup-button primary" type="submit" id="cm-popup-submit">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <template id="cm-add-contact-template">
+      <div class="cm-popup-field">
+        <label class="cm-popup-label" for="cm-contact-name">Name</label>
+        <input class="cm-popup-input" type="text" id="cm-contact-name" name="cm-contact-name" placeholder="Full name" required>
+      </div>
+      <div class="cm-popup-grid">
+        <div class="cm-popup-field">
+          <label class="cm-popup-label" for="cm-contact-phone">Phone</label>
+          <input class="cm-popup-input" type="tel" id="cm-contact-phone" name="cm-contact-phone" placeholder="(555) 555-5555">
+        </div>
+        <div class="cm-popup-field">
+          <label class="cm-popup-label" for="cm-contact-email">Email</label>
+          <input class="cm-popup-input" type="email" id="cm-contact-email" name="cm-contact-email" placeholder="email@example.com">
+        </div>
+      </div>
+    </template>
+    <script src="js/contacts.js"></script>
   </body>
 </html>

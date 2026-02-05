@@ -1,0 +1,60 @@
+/* Layout for the About Us content panel */
+.about-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    
+    width: 1100px;
+    height: 400px;
+    
+    padding: 30px 50px;
+    
+    background-color: #aa8552;
+    border: 3px solid #daccc4;
+    border-radius: 10px;
+}
+
+/* Centered header text */
+.about-header {
+    font-size: 50px;
+    color: #ffffff;
+    text-align: center;
+    
+    margin-bottom: 28px;
+}
+
+/* Grid for teammate slots */
+.about-team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    
+    width: 100%;
+}
+
+.about-team-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    height: 130px;
+    
+    background-color: #daccc4;
+    border: 3px solid #374f4e;
+    border-radius: 12px;
+}
+
+.about-team-name {
+    font-size: 22px;
+    font-weight: 600;
+    color: #000000;
+}
+
+.about-team-role {
+    font-size: 18px;
+    color: #000000;
+    opacity: 0.85;
+    margin-top: 6px;
+}

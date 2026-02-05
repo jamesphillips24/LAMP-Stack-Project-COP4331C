@@ -1,27 +1,78 @@
-<html>
-<head>
-  <link rel="stylesheet" href="css/loginStyles.css">
-  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto Slab'>
-  <title>Contact Manager</title>
-  <script type="text/javascript" src="js/code.js"></script>
-</head>
-
-<body>
-  <div class="login-container">
-    <div class="login-bg-rect">
-      <div class="login-header-text">Contact Manager</div>
-      <div class="login-horizontal-line"></div>
-      <div class="login-label">Username:</div>
-      <div class="login-field-container">
-        <input type="text" id="username" name="username">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/loginStyles.css">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto Slab'>
+    <title>Contact Manager</title>
+  </head>
+  <body>
+    <div class="login-container">
+      <div class="login-bg-rect">
+        <div class="login-header-text">Contact Manager</div>
+        <div class="login-horizontal-line"></div>
+        <div class="login-label">Username:</div>
+        <div class="login-field-container">
+          <input type="text" placeholder="Enter username here" id="username" class="login-text-field" autocomplete="username">
+        </div>
+        <div class="login-label">Password:</div>
+        <div class="login-field-container">
+          <input type="text" placeholder="Enter password here" id="password" class="login-text-field" autocomplete="current-password">
+        </div>
+        <div class="login-error-text" id="login-error-text"></div>
+        <div class="login-horizontal-line has-margins"></div>
+        <div class="login-actions">
+          <!-- TODO(API): Replace href redirect with real login submission via API. -->
+          <a href="contacts.html" class="login-button">Log In</a>
+          <div class="login-signup-text">
+            No account?
+            <a href="#" class="login-signup-link" id="login-signup-button" aria-haspopup="dialog" aria-controls="cm-popup-overlay">Sign up here!</a>
+          </div>
+        </div>
       </div>
-      <div class="login-label">Password:</div>
-      <div class="login-field-container">
-        <input type="text" id="password" name="password">
-      </div>
-      <div class="login-horizontal-line has-margins"></div>
-      <button type="button" id="loginButton" class="login-button" onclick="doLogin();">Log In</a>
     </div>
-  </div>
-</body>
+
+    <div class="cm-popup-overlay" id="cm-popup-overlay" aria-hidden="true">
+      <div class="cm-popup" role="dialog" aria-modal="true" aria-labelledby="cm-popup-title" aria-describedby="cm-popup-description">
+        <div class="cm-popup-header">
+          <div class="cm-popup-title" id="cm-popup-title">Sign Up</div>
+          <button class="cm-popup-close" type="button" id="cm-popup-close" aria-label="Close dialog">X</button>
+        </div>
+        <div class="cm-popup-body">
+          <p class="cm-popup-description" id="cm-popup-description">Create an account to save your contacts!</p>
+          <form class="cm-popup-form" id="cm-popup-form">
+            <div class="cm-popup-content" id="cm-popup-content"></div>
+            <div class="cm-popup-actions">
+              <button class="cm-popup-button ghost" type="button" id="cm-popup-cancel">Cancel</button>
+              <button class="cm-popup-button primary" type="submit" id="cm-popup-submit">Create Account</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <template id="cm-signup-template">
+      <div class="cm-popup-field">
+        <label class="cm-popup-label" for="cm-signup-name">Full Name</label>
+        <input class="cm-popup-input" type="text" id="cm-signup-name" name="cm-signup-name" placeholder="Your name" required>
+      </div>
+      <div class="cm-popup-field">
+        <label class="cm-popup-label" for="cm-signup-email">Email</label>
+        <input class="cm-popup-input" type="email" id="cm-signup-email" name="cm-signup-email" placeholder="name@example.com" required>
+      </div>
+      <div class="cm-popup-grid">
+        <div class="cm-popup-field">
+          <label class="cm-popup-label" for="cm-signup-password">Password</label>
+          <input class="cm-popup-input" type="password" id="cm-signup-password" name="cm-signup-password" placeholder="Create password" required>
+        </div>
+        <div class="cm-popup-field">
+          <label class="cm-popup-label" for="cm-signup-confirm">Confirm Password</label>
+          <input class="cm-popup-input" type="password" id="cm-signup-confirm" name="cm-signup-confirm" placeholder="Confirm password" required>
+        </div>
+      </div>
+    </template>
+    
+    <script src="js/code.js"></script>
+    <script src="js/login.js"></script>
+  </body>
 </html>
