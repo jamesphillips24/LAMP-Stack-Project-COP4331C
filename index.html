@@ -23,7 +23,7 @@
         <div class="login-horizontal-line has-margins"></div>
         <div class="login-actions">
           <!-- TODO(API): Replace href redirect with real login submission via API. -->
-          <a href="contacts.html" class="login-button">Log In</a>
+          <button type="button" id="loginButton" class="login-button" onclick="doLogin();">Log In</a>
           <div class="login-signup-text">
             No account?
             <a href="#" class="login-signup-link" id="login-signup-button" aria-haspopup="dialog" aria-controls="cm-popup-overlay">Sign up here!</a>
@@ -44,7 +44,7 @@
             <div class="cm-popup-content" id="cm-popup-content"></div>
             <div class="cm-popup-actions">
               <button class="cm-popup-button ghost" type="button" id="cm-popup-cancel">Cancel</button>
-              <button class="cm-popup-button primary" type="submit" id="cm-popup-submit">Create Account</button>
+              <button class="cm-popup-button primary" type="submit" id="cm-popup-submit" onclick="doSignup();">Create Account</button>
             </div>
           </form>
         </div>
@@ -53,12 +53,16 @@
 
     <template id="cm-signup-template">
       <div class="cm-popup-field">
-        <label class="cm-popup-label" for="cm-signup-name">Full Name</label>
-        <input class="cm-popup-input" type="text" id="cm-signup-name" name="cm-signup-name" placeholder="Your name" required>
+        <label class="cm-popup-label" for="cm-signup-first-name">First Name</label>
+        <input class="cm-popup-input" type="text" id="cm-signup-first-name" name="cm-signup-first-name" placeholder="Your name" required>
       </div>
       <div class="cm-popup-field">
-        <label class="cm-popup-label" for="cm-signup-email">Email</label>
-        <input class="cm-popup-input" type="email" id="cm-signup-email" name="cm-signup-email" placeholder="name@example.com" required>
+        <label class="cm-popup-label" for="cm-signup-last-name">Last Name</label>
+        <input class="cm-popup-input" type="text" id="cm-signup-last-name" name="cm-signup-last-name" placeholder="Your name" required>
+      </div>
+      <div class="cm-popup-field">
+        <label class="cm-popup-label" for="cm-signup-username">Username</label>
+        <input class="cm-popup-input" type="username" id="cm-signup-username" name="cm-signup-username" placeholder="username" required>
       </div>
       <div class="cm-popup-grid">
         <div class="cm-popup-field">
@@ -71,7 +75,7 @@
         </div>
       </div>
     </template>
-    
+
     <script src="js/code.js"></script>
     <script src="js/login.js"></script>
   </body>
