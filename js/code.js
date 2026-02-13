@@ -1,4 +1,3 @@
-// TODO(API): Update base URL to the deployed API origin for the environment.
 const urlBase = 'https://contactmanager4331.xyz/';
 const extension = 'php';
 
@@ -14,8 +13,8 @@ function doLogin()
 
 	let login = document.getElementById("username").value;
 	let password = document.getElementById("password").value;
-	// TODO(API): Remove debug logging before production.
-	if (login === "" || password === "") return// clear previous error
+	if (login === "" || password === "")
+		return;
 	document.getElementById("login-error-text").innerHTML = "";
 
 	login = login.trim();
@@ -32,7 +31,6 @@ function doLogin()
 	let tmp = {login:login,password:password};
 	let jsonPayload = JSON.stringify( tmp );
 
-	// TODO(API): Keep endpoint path in sync with backend routing.
 	let url = urlBase + '/LAMPAPI/Login.' + extension;
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
@@ -47,7 +45,6 @@ function doLogin()
 				let jsonObject = JSON.parse( xhr.responseText );
 				userId = jsonObject.id;
 
-				// TODO(API): Display login errors from the API instead of silent return.
 				if (userId < 1) {
   					document.getElementById("login-error-text").innerHTML = jsonObject.error || "Invalid username or password.";
  					 return;
@@ -57,7 +54,6 @@ function doLogin()
 				firstName = jsonObject.firstName;
 				lastName = jsonObject.lastName;
 
-				// TODO(API): Consider replacing cookie auth with a session/JWT flow from the backend.
 				saveCookie();
 
 				window.location.href = "contacts.html";
@@ -112,10 +108,6 @@ function readCookie()
 	{
 		window.location.href = "index.html";
 	}
-	else
-	{
-//		document.getElementById("userName").innerHTML = "Logged in as " + firstName + " " + lastName;
-	}
 }
 
 function doLogout()
@@ -137,8 +129,7 @@ function doSignup()
 	let lname = document.getElementById("cm-signup-last-name").value;
 	let login = document.getElementById("cm-signup-username").value;
 	let password = document.getElementById("cm-signup-password").value;
-	// TODO(API): Remove debug logging before production.
-	// TODO: add error logging for signup
+	
 	document.getElementById("login-error-text").innerHTML = "";
 
 	login = login.trim();
@@ -147,7 +138,6 @@ function doSignup()
 	lname = lname.trim();
 
 	if (login === "" || password === "" || fname === "" || lname === "") {
-  		//document.getElementById("login-error-text").innerHTML = "Please enter username and password.";
   		return;
 	};
 
@@ -159,7 +149,6 @@ function doSignup()
 	let tmp = {login:login,password:password,fname:fname,lname:lname};
 	let jsonPayload = JSON.stringify( tmp );
 
-	// TODO(API): Keep endpoint path in sync with backend routing.
 	let url = urlBase + '/LAMPAPI/Signup.' + extension;
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
@@ -173,21 +162,13 @@ function doSignup()
 				let jsonObject = JSON.parse( xhr.responseText );
 				userId = jsonObject.id;
 
-				// TODO(API): Display login errors from the API instead of silent return.
 				if (userId >= 0) {
-					document.getElementById("login-error-text").innerHTML = "Accout created. Please login";
+					document.getElementById("login-error-text").innerHTML = "Account created. Please login";
  					return;
 				}
 				else{
 					document.getElementById("login-error-text").innerHTML = "Username already in use.";
 				}
-
-
-
-				// TODO(API): Consider replacing cookie auth with a session/JWT flow from the backend.
-				// saveCookie();
-
-				// window.location.href = "contacts.html";
 			}
 			else{
 				console.log(this.readyState + ' ' + this.status);

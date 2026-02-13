@@ -12,7 +12,8 @@
   let activePopup = null;
 
   function openPopup() {
-    if (!popupOverlay) return;
+    if (!popupOverlay)
+      return;
     if (popupContent) {
       popupContent.innerHTML = '';
       if (signupTemplate?.content) {
@@ -24,16 +25,19 @@
     popupOverlay.setAttribute('aria-hidden', 'false');
     document.body.classList.add('cm-popup-open');
     const firstInput = popupOverlay.querySelector('input, select, textarea, button');
-    if (firstInput) firstInput.focus();
+    if (firstInput)
+      firstInput.focus();
   }
 
   function closePopup() {
-    if (!popupOverlay) return;
+    if (!popupOverlay)
+      return;
     popupOverlay.classList.remove('is-open');
     popupOverlay.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('cm-popup-open');
     activePopup = null;
-    if (popupContent) popupContent.innerHTML = '';
+    if (popupContent)
+      popupContent.innerHTML = '';
   }
 
   if (signupButton) {
@@ -60,9 +64,6 @@
   if (popupForm) {
     popupForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      if (activePopup === 'signup') {
-        // TODO(API): Wire signup submission to backend and handle errors.
-      }
       closePopup();
     });
   }

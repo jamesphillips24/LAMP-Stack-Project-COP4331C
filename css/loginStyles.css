@@ -183,11 +183,11 @@ body.cm-popup-open {
 /* Signup text link */
 .login-signup-text {
     font-size: 18px;
-    color: #ffffff;
+    color: #000000;
 }
 
 .login-signup-link {
-    color: #edbd95;
+    color: #000000;
     text-decoration: none;
     font-weight: 600;
 }
