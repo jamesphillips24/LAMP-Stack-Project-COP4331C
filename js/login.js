@@ -13,9 +13,6 @@
 
   function openPopup() {
     if (!popupOverlay) return;
-    if (popupTitle) popupTitle.textContent = 'Sign Up';
-    if (popupDescription) popupDescription.textContent = 'Create an account to save your contacts.';
-    if (popupSubmit) popupSubmit.textContent = 'Create Account';
     if (popupContent) {
       popupContent.innerHTML = '';
       if (signupTemplate?.content) {
