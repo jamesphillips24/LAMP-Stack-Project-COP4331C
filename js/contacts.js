@@ -36,6 +36,46 @@
   // TODO(API): Replace local list with API-backed contacts data.
   const allData = [];
 
+  const urlBase = 'https://contactmanager4331.xyz/';
+  const extension = 'php';
+
+  function readUserIdFromCookie() {
+    let uid = -1;
+    const parts = (document.cookie || '').split(';');
+    for (const p of parts) {
+      const [k, v] = p.trim().split('=');
+      if (k === 'userId') uid = parseInt(v, 10);
+    }
+    return uid;
+  }
+
+  const userId = readUserIdFromCookie();
+  if (!Number.isFinite(userId) || userId < 1) {
+    window.location.href = 'index.html';
+    return;
+  }
+
+  async function apiPost(endpoint, payload) {
+    const res = await fetch(`${urlBase}/LAMPAPI/${endpoint}.${extension}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) {
+      const text = await res.text().catch(() => '');
+      throw new Error(`HTTP ${res.status} ${endpoint}: ${text}`);
+    }
+    return res.json();
+  }
+
+  function splitName(full) {
+    const parts = (full || '').trim().split(/\s+/).filter(Boolean);
+    const firstName = parts.shift() || '';
+    const lastName = parts.join(' ');
+    return { firstName, lastName };
+  }
+
+
   function getContactById(id) {
     return allData.find(contact => contact.id === id);
   }
@@ -156,18 +196,23 @@
     if (current) current.setAttribute('aria-selected', 'true');
   }
 
-  // TODO(API): Replace mock fetch with a real API call.
-  function fetchMock({ page = 1, limit = PAGE_SIZE, search = '' } = {}) {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const src = search
-          ? allData.filter(d => d.name.toLowerCase().includes(search.toLowerCase()))
-          : allData;
-        const start = (page - 1) * limit;
-        const items = src.slice(start, start + limit);
-        resolve({ items, total: src.length });
-      }, 120); // simulate small latency
-    });
+  async function fetchFromAPI({ search = '' } = {}) {
+    const data = await apiPost('SearchContacts', { search, userId });
+
+    if (data.error && data.error !== '') {
+      return { items: [], total: 0, error: data.error };
+    }
+
+    const results = Array.isArray(data.results) ? data.results : [];
+    const items = results.map((c) => ({
+      id: Number(c.id),
+      name: `${c.firstName || ''} ${c.lastName || ''}`.trim() || 'Unnamed Contact',
+      phone: c.phone || '',
+      email: c.email || '',
+      avatarUrl: null,
+    }));
+
+    return { items, total: items.length, error: '' };
   }
 
   function renderContacts(items = [], { replace = false } = {}) {
@@ -214,30 +259,68 @@
     setAvatar(itemEl.querySelector('.cts-small-contact-avatar'), contact);
   }
 
-  function saveEdits() {
+    async function saveEdits() {
     const contact = getContactById(selectedId);
     if (!contact) return;
+
     const updatedName = nameInput.value.trim();
-    contact.name = updatedName || 'Unnamed Contact';
-    contact.phone = phoneInput.value.trim();
-    contact.email = emailInput.value.trim();
-    updateInfoPanel(contact);
-    updateListItem(contact);
+    const { firstName, lastName } = splitName(updatedName);
+
+    const phone = phoneInput.value.trim();
+    const email = emailInput.value.trim();
+
+    const res = await apiPost('UpdateContact', {
+      id: selectedId,
+      firstName,
+      lastName,
+      phone,
+      email,
+      userId
+    });
+
+    if (res.error && res.error !== '') {
+      setInfoStatus(res.error);
+      return;
+    }
+
+    await loadMore({ reset: true });
     setEditing(false);
+    setInfoStatus('Saved.');
   }
+
 
   async function loadMore({ reset = false } = {}) {
     if (loading || (ended && !reset)) return;
     loading = true;
+
     try {
-      if (reset) page = 1;
-      const data = await fetchMock({ page, limit: PAGE_SIZE, search: query });
-      renderContacts(data.items, { replace: reset });
-      if (reset) syncSelectionAfterRender(data.items);
-      if (data.items.length < PAGE_SIZE || (page * PAGE_SIZE) >= data.total) ended = true;
+      if (reset) {
+        page = 1;
+        ended = false;
+        listEl.innerHTML = '';
+      }
+
+      // refresh allData from DB when resetting (new search, initial load)
+      if (reset) {
+        const data = await fetchFromAPI({ search: query });
+
+        allData.length = 0;
+        allData.push(...data.items);
+
+        if (data.error) setInfoStatus(data.error);
+      }
+
+      const start = (page - 1) * PAGE_SIZE;
+      const chunk = allData.slice(start, start + PAGE_SIZE);
+
+      renderContacts(chunk, { replace: reset });
+      if (reset) syncSelectionAfterRender(chunk);
+
+      if (chunk.length < PAGE_SIZE || start + chunk.length >= allData.length) ended = true;
       else page++;
     } catch (err) {
-      console.error('mock load error', err);
+      console.error(err);
+      setInfoStatus('Failed to load contacts.');
     } finally {
       loading = false;
     }
@@ -286,7 +369,7 @@
   });
 
   if (editButton) {
-    editButton.addEventListener('click', (e) => {
+    editButton.addEventListener('click', async (e) => {
       e.preventDefault();
       if (!selectedId || editButton.classList.contains('is-disabled')) return;
       if (!editing) {
@@ -296,7 +379,7 @@
           nameInput.select();
         }
       } else {
-        saveEdits();
+        await saveEdits();
       }
     });
   }
@@ -311,6 +394,38 @@
         submitLabel: 'Save',
         mode: 'add-contact'
       });
+    });
+  }
+
+
+  const deleteButton = document.getElementById('cts-delete-button');
+
+  if (deleteButton) {
+    deleteButton.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      if (!selectedId) {
+        setInfoStatus('Select a contact to delete.');
+        return;
+      }
+
+      // if (!confirm('Delete this contact?')) return;
+
+      apiPost('DeleteContact', { id: selectedId, userId })
+        .then((res) => {
+          if (res.error && res.error !== '') {
+            setInfoStatus(res.error);
+            return;
+          }
+
+          selectedId = null;
+          setInfoStatus('Deleted.');
+          return loadMore({ reset: true });
+        })
+        .catch((err) => {
+          console.error(err);
+          setInfoStatus('Failed to delete contact.');
+        });
     });
   }
 
@@ -348,22 +463,28 @@
           return;
         }
 
-        // TODO(API): Send create-contact request to backend and use returned ID.
-        const newContact = {
-          id: getNextId(),
-          name: nameValue,
+        const { firstName, lastName } = splitName(nameValue);
+
+        const res = await apiPost('AddContact', {
+          firstName,
+          lastName,
           phone: phoneValue,
           email: emailValue,
-          avatarUrl: null
-        };
+          userId
+        });
 
-        // TODO(API): Replace local insert with a refetch from the backend.
-        allData.unshift(newContact);
-        selectedId = newContact.id;
+        if (res.error && res.error !== '') {
+          setInfoStatus(res.error);
+          return;
+        }
+
+        // reload from DB
+        selectedId = Number(res.id) || null;
         query = '';
         if (searchInput) searchInput.value = '';
         await loadMore({ reset: true });
-        setInfoStatus('Contact added locally.');
+        setInfoStatus('Contact added.');
+
       }
       closePopup();
     });

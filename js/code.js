@@ -1,5 +1,5 @@
 // TODO(API): Update base URL to the deployed API origin for the environment.
-const urlBase = 'https://contactmanager4331.xyz';
+const urlBase = 'https://contactmanager4331.xyz/';
 const extension = 'php';
 
 let userId = 0;
@@ -43,6 +43,7 @@ function doLogin()
 		{
 			if (this.readyState == 4 && this.status == 200)
 			{
+				console.log(xhr.responseText );
 				let jsonObject = JSON.parse( xhr.responseText );
 				userId = jsonObject.id;
 
