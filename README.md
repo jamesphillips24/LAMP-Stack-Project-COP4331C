@@ -32,7 +32,7 @@ The application demonstrates a complete LAMP-stack workflow, including frontend 
 
 ## Project Highlights
 - Clear separation of frontend, backend, and database responsibilities enabled parallel development.
-- UI was designed in Figma before implementation, improving consistency and workflow.
+- The frontend was developed using HTML, CSS, and JavaScript.
 - Encountered and resolved API communication issues related to HTTP/HTTPS configuration.
 
 ## AI Usage
