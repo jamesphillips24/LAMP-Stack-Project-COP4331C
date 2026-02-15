@@ -33,7 +33,6 @@
   let editing = false;
   let activePopup = null;
 
-  // TODO(API): Replace local list with API-backed contacts data.
   const allData = [];
 
   const urlBase = 'https://contactmanager4331.xyz/';
@@ -44,7 +43,8 @@
     const parts = (document.cookie || '').split(';');
     for (const p of parts) {
       const [k, v] = p.trim().split('=');
-      if (k === 'userId') uid = parseInt(v, 10);
+      if (k === 'userId')
+        uid = parseInt(v, 10);
     }
     return uid;
   }
@@ -97,7 +97,8 @@
   }
 
   function setAvatar(avatarEl, contact) {
-    if (!avatarEl || !contact) return;
+    if (!avatarEl || !contact)
+      return;
     if (contact.avatarUrl) {
       avatarEl.style.backgroundImage = `url(${contact.avatarUrl})`;
       avatarEl.textContent = '';
@@ -108,27 +109,35 @@
   }
 
   function updateInfoPanel(contact) {
-    if (!contact) return;
+    if (!contact)
+      return;
     const displayName = contact.name || 'Unnamed Contact';
-    if (infoTitle) infoTitle.textContent = displayName;
-    if (nameInput) nameInput.value = contact.name || '';
-    if (phoneInput) phoneInput.value = contact.phone || '';
-    if (emailInput) emailInput.value = contact.email || '';
+    if (infoTitle)
+      infoTitle.textContent = displayName;
+    if (nameInput)
+      nameInput.value = contact.name || '';
+    if (phoneInput) 
+      phoneInput.value = contact.phone || '';
+    if (emailInput)
+      emailInput.value = contact.email || '';
     setAvatar(infoAvatar, contact);
   }
 
   function setInfoStatus(message) {
-    if (infoStatus) infoStatus.textContent = message;
+    if (infoStatus)
+      infoStatus.textContent = message;
   }
 
   function setEditing(state) {
     editing = state;
-    if (infoPanel) infoPanel.classList.toggle('is-editing', editing);
+    if (infoPanel)
+      infoPanel.classList.toggle('is-editing', editing);
     editableFields.forEach((field) => {
       if (!field) return;
       field.disabled = !editing;
     });
-    if (editButtonText) editButtonText.textContent = editing ? 'Save' : 'Edit';
+    if (editButtonText)
+      editButtonText.textContent = editing ? 'Save' : 'Edit';
     if (!selectedId) {
       setInfoStatus('Select a contact to view details.');
     } else {
@@ -137,10 +146,14 @@
   }
 
   function openPopup({ title, description, template, submitLabel, mode } = {}) {
-    if (!popupOverlay) return;
-    if (popupTitle) popupTitle.textContent = title || 'Details';
-    if (popupDescription) popupDescription.textContent = description || '';
-    if (popupSubmit) popupSubmit.textContent = submitLabel || 'Save';
+    if (!popupOverlay)
+      return;
+    if (popupTitle)
+      popupTitle.textContent = title || 'Details';
+    if (popupDescription)
+      popupDescription.textContent = description || '';
+    if (popupSubmit)
+      popupSubmit.textContent = submitLabel || 'Save';
     if (popupContent) {
       popupContent.innerHTML = '';
       if (template?.content) {
@@ -156,25 +169,32 @@
   }
 
   function closePopup() {
-    if (!popupOverlay) return;
+    if (!popupOverlay)
+      return;
     popupOverlay.classList.remove('is-open');
     popupOverlay.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('cm-popup-open');
     activePopup = null;
-    if (popupContent) popupContent.innerHTML = '';
+    if (popupContent)
+      popupContent.innerHTML = '';
   }
 
   function clearInfoPanel() {
     selectedId = null;
-    if (infoTitle) infoTitle.textContent = 'Select a contact';
-    if (nameInput) nameInput.value = '';
-    if (phoneInput) phoneInput.value = '';
-    if (emailInput) emailInput.value = '';
+    if (infoTitle)
+      infoTitle.textContent = 'Select a contact';
+    if (nameInput)
+      nameInput.value = '';
+    if (phoneInput)
+      phoneInput.value = '';
+    if (emailInput)
+      emailInput.value = '';
     if (infoAvatar) {
       infoAvatar.style.backgroundImage = '';
       infoAvatar.textContent = '?';
     }
-    if (editButton) editButton.classList.add('is-disabled');
+    if (editButton)
+      editButton.classList.add('is-disabled');
     setEditing(false);
   }
 
@@ -186,14 +206,17 @@
     }
 
     selectedId = contact.id;
-    if (editButton) editButton.classList.remove('is-disabled');
+    if (editButton)
+      editButton.classList.remove('is-disabled');
     setEditing(false);
     updateInfoPanel(contact);
 
     const prev = listEl.querySelector('[aria-selected="true"]');
-    if (prev) prev.removeAttribute('aria-selected');
+    if (prev)
+      prev.setAttribute('aria-selected', 'false');
     const current = listEl.querySelector(`.cts-contact-item[data-id="${contact.id}"]`);
-    if (current) current.setAttribute('aria-selected', 'true');
+    if (current)
+      current.setAttribute('aria-selected', 'true');
   }
 
   async function fetchFromAPI({ search = '' } = {}) {
@@ -224,6 +247,7 @@
       const node = tmpl.content.cloneNode(true);
       const root = node.querySelector('.cts-contact-item');
       root.dataset.id = item.id;
+      root.setAttribute('aria-selected', 'false');
       root.querySelector('.cts-contact-name').textContent = item.name;
       root.querySelector('.cts-contact-phone').textContent = item.phone;
       const avatar = root.querySelector('.cts-small-contact-avatar');
@@ -241,10 +265,12 @@
     const match = selectedId ? items.find(item => item.id === selectedId) : null;
     if (match) {
       const current = listEl.querySelector(`.cts-contact-item[data-id="${match.id}"]`);
-      if (current) current.setAttribute('aria-selected', 'true');
+      if (current)
+        current.setAttribute('aria-selected', 'true');
       setEditing(false);
       updateInfoPanel(match);
-      if (editButton) editButton.classList.remove('is-disabled');
+      if (editButton)
+        editButton.classList.remove('is-disabled');
       return;
     }
 
@@ -253,7 +279,8 @@
 
   function updateListItem(contact) {
     const itemEl = listEl.querySelector(`.cts-contact-item[data-id="${contact.id}"]`);
-    if (!itemEl) return;
+    if (!itemEl)
+      return;
     itemEl.querySelector('.cts-contact-name').textContent = contact.name;
     itemEl.querySelector('.cts-contact-phone').textContent = contact.phone;
     setAvatar(itemEl.querySelector('.cts-small-contact-avatar'), contact);
@@ -261,7 +288,8 @@
 
     async function saveEdits() {
     const contact = getContactById(selectedId);
-    if (!contact) return;
+    if (!contact)
+      return;
 
     const updatedName = nameInput.value.trim();
     const { firstName, lastName } = splitName(updatedName);
@@ -307,17 +335,21 @@
         allData.length = 0;
         allData.push(...data.items);
 
-        if (data.error) setInfoStatus(data.error);
+        if (data.error)
+          setInfoStatus(data.error);
       }
 
       const start = (page - 1) * PAGE_SIZE;
       const chunk = allData.slice(start, start + PAGE_SIZE);
 
       renderContacts(chunk, { replace: reset });
-      if (reset) syncSelectionAfterRender(chunk);
+      if (reset)
+        syncSelectionAfterRender(chunk);
 
-      if (chunk.length < PAGE_SIZE || start + chunk.length >= allData.length) ended = true;
-      else page++;
+      if (chunk.length < PAGE_SIZE || start + chunk.length >= allData.length) 
+        ended = true;
+      else
+        page++;
     } catch (err) {
       console.error(err);
       setInfoStatus('Failed to load contacts.');
@@ -352,14 +384,17 @@
       return;
     }
     const item = e.target.closest('.cts-contact-item');
-    if (!item) return;
+    if (!item)
+      return;
     selectContact(Number(item.dataset.id));
   });
 
   listEl.addEventListener('keydown', (e) => {
     const item = e.target.closest('.cts-contact-item');
-    if (!item) return;
-    if (e.key !== 'Enter' && e.key !== ' ') return;
+    if (!item)
+      return;
+    if (e.key !== 'Enter' && e.key !== ' ')
+      return;
     e.preventDefault();
     if (editing) {
       setInfoStatus('Save changes before switching contacts.');
@@ -371,7 +406,8 @@
   if (editButton) {
     editButton.addEventListener('click', async (e) => {
       e.preventDefault();
-      if (!selectedId || editButton.classList.contains('is-disabled')) return;
+      if (!selectedId || editButton.classList.contains('is-disabled'))
+        return;
       if (!editing) {
         setEditing(true);
         if (nameInput) {
@@ -408,8 +444,6 @@
         setInfoStatus('Select a contact to delete.');
         return;
       }
-
-      // if (!confirm('Delete this contact?')) return;
 
       apiPost('DeleteContact', { id: selectedId, userId })
         .then((res) => {
@@ -498,12 +532,15 @@
 
   if (nameInput) {
     nameInput.addEventListener('input', () => {
-      if (!editing) return;
+      if (!editing)
+        return;
       const previewName = nameInput.value.trim() || 'Unnamed Contact';
-      if (infoTitle) infoTitle.textContent = previewName;
+      if (infoTitle)
+        infoTitle.textContent = previewName;
       const contact = getContactById(selectedId);
       if (contact && !contact.avatarUrl) {
-        if (infoAvatar) infoAvatar.textContent = getInitials(previewName) || '?';
+        if (infoAvatar)
+          infoAvatar.textContent = getInitials(previewName) || '?';
       }
     });
   }

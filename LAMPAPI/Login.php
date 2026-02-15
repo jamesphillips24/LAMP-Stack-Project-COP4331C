@@ -25,7 +25,7 @@
                 }
                 else
                 {
-                        returnWithError("No Records Found");
+                        returnWithError("Incorrect Username or Password");
                 }
 
                 $stmt->close();

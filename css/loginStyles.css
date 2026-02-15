@@ -161,6 +161,7 @@ body.cm-popup-open {
     text-align: center;
     text-decoration: none;
     font-size: 32px;
+    font-family: 'Roboto Slab';
     
     cursor: pointer;
     transition-duration: 0.4s;
@@ -182,11 +183,11 @@ body.cm-popup-open {
 /* Signup text link */
 .login-signup-text {
     font-size: 18px;
-    color: #ffffff;
+    color: #000000;
 }
 
 .login-signup-link {
-    color: #edbd95;
+    color: #000000;
     text-decoration: none;
     font-weight: 600;
 }
